@@ -48,6 +48,17 @@
           }
         }
       }
+    },
+    "/ideaWall/deleted" : {
+      "delete" : {
+        "summary" : null,
+        "description" : null,
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
     }
   },
   "definitions" : {
