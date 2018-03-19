@@ -49,13 +49,32 @@
         }
       }
     },
-    "/ideaWall/deleted" : {
-      "delete" : {
-        "summary" : "d",
-        "description" : "Test",
+    "/getIdea/{profilID}" : {
+      "get" : {
+        "summary" : "Lade Ideen von einem Profil",
+        "description" : "Mit übergeben der ProfilId werden die enthaltenen Ideen übergeben",
+        "operationId" : "getIdeasById",
+        "produces" : [ "application/xml", "application/json" ],
+        "parameters" : [ {
+          "name" : "profilID",
+          "in" : "path",
+          "description" : "ID of Ideas to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Idea"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Idea not found"
           }
         }
       }
