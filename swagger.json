@@ -1,0 +1,108 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Eine API für die IdeaWall",
+    "version" : "1.0.0",
+    "title" : "Ideawall",
+    "contact" : {
+      "email" : "you@your-company.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "Markus",
+    "description" : "Entwickler der API"
+  }, {
+    "name" : "Halil",
+    "description" : "Entwickler der API"
+  } ],
+  "paths" : {
+    "/ideaWall/create" : {
+      "post" : {
+        "tags" : [ "Markus" ],
+        "summary" : "Anlegen eine Idee",
+        "operationId" : "createIdea",
+        "description" : "Hier wird bei Aufruf eine Idee erstellt und dem der mitgegebenen User Id\nzugeteilt\n",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "Idea",
+          "description" : "Idee die uebergeben wird",
+          "schema" : {
+            "$ref" : "#/definitions/Idea"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "item created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Idea" : {
+      "type" : "object",
+      "required" : [ "id", "titel", "description", "userId", "status" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 408
+        },
+        "titel" : {
+          "type" : "string",
+          "example" : "Ideen Name"
+        },
+        "description" : {
+          "type" : "string",
+          "example" : "Meine Idee ist..."
+        },
+        "userId" : {
+          "type" : "integer",
+          "example" : 12
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "Erstellt"
+        },
+        "numberOfRatings" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "sumOfAllRatings" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "Comments" : {
+          "$ref" : "#/definitions/Comments"
+        }
+      }
+    },
+    "Comments" : {
+      "required" : [ "userId", "text" ],
+      "properties" : {
+        "userId" : {
+          "type" : "integer",
+          "example" : 12
+        },
+        "text" : {
+          "type" : "string",
+          "example" : "Hier der Kommentar"
+        }
+      }
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/SoftwareDesign/IdeaWallApi/1.0.0",
+  "schemes" : [ "https" ]
+}
