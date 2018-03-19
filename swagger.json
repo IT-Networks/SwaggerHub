@@ -51,8 +51,8 @@
     },
     "/ideaWall/deleted" : {
       "delete" : {
-        "summary" : null,
-        "description" : null,
+        "summary" : "d",
+        "description" : "Test",
         "responses" : {
           "200" : {
             "description" : "OK"
