@@ -20,7 +20,7 @@
     "description" : "Entwickler der API"
   } ],
   "paths" : {
-    "/ideaWall/create" : {
+    "/idea" : {
       "post" : {
         "tags" : [ "Markus" ],
         "summary" : "Anlegen eine Idee",
