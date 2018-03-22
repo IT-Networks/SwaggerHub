@@ -345,7 +345,7 @@
           "format" : "int64",
           "example" : 10
         },
-        "uerID" : {
+        "userID" : {
           "type" : "integer",
           "format" : "int64",
           "example" : 12
