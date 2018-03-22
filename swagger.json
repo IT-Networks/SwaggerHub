@@ -12,20 +12,21 @@
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
+  "basePath" : "/SoftwareDesign/IdeaWallApi/1.0.0",
   "tags" : [ {
-    "name" : "Markus",
-    "description" : "Entwickler der API"
+    "name" : "Idea",
+    "description" : "Ideen der Ideawall"
   }, {
-    "name" : "Halil",
-    "description" : "Entwickler der API"
+    "name" : "Comment",
+    "description" : "Kommentare zu Ideen"
   } ],
   "paths" : {
     "/idea" : {
       "post" : {
-        "tags" : [ "Markus" ],
+        "tags" : [ "Idea" ],
         "summary" : "Anlegen eine Idee",
         "operationId" : "createIdea",
-        "description" : "Hier wird bei Aufruf eine Idee erstellt und dem der mitgegebenen User Id\nzugeteilt\n",
+        "description" : "Hier wird bei Aufruf eine Idee erstellt und dem der mitgegebenen User Id zugeteilt",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -51,9 +52,10 @@
     },
     "/idea/{profilID}" : {
       "get" : {
+        "tags" : [ "Idea" ],
         "summary" : "Lade Ideen von einem Profil",
         "description" : "Mit übergeben der ProfilId werden die enthaltenen Ideen übergeben",
-        "operationId" : "getIdeasById",
+        "operationId" : "getIdeasByProfilId",
         "produces" : [ "application/xml", "application/json" ],
         "parameters" : [ {
           "name" : "profilID",
@@ -81,9 +83,12 @@
     },
     "/idea/{ideaID}/comment" : {
       "post" : {
-        "tags" : [ "Halil" ],
+        "tags" : [ "Comment" ],
         "summary" : "Anlage eines Kommentar zu einer Idee",
-        "description" : "Beschreibung",
+        "description" : "Die IdeaID wird im Pfad angegeben und der Kommentar im body des Requests",
+        "operationId" : "createCommentToIdea",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "ideaID",
           "in" : "path",
@@ -92,8 +97,8 @@
           "type" : "integer",
           "format" : "int64"
         }, {
-          "in" : "body",
           "name" : "Comment",
+          "in" : "body",
           "description" : "Kommentar, der übergeben wird",
           "required" : true,
           "schema" : {
@@ -102,7 +107,13 @@
         } ],
         "responses" : {
           "201" : {
-            "description" : "OK"
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Comment"
+              }
+            }
           }
         }
       }
@@ -147,7 +158,7 @@
       }
     },
     "Comment" : {
-      "required" : [ "commentID", "userId", "text" ],
+      "required" : [ "commentID", "userID", "text" ],
       "properties" : {
         "commentID" : {
           "type" : "integer",
@@ -165,6 +176,5 @@
     }
   },
   "host" : "virtserver.swaggerhub.com",
-  "basePath" : "/SoftwareDesign/IdeaWallApi/1.0.0",
   "schemes" : [ "https" ]
 }
