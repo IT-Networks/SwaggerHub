@@ -13,6 +13,8 @@
     }
   },
   "basePath" : "/SoftwareDesign/IdeaWallApi/1.0.0",
+  "host" : "virtserver.swaggerhub.com",
+  "schemes" : [ "https" ],
   "tags" : [ {
     "name" : "Idea",
     "description" : "Ideen der Ideawall"
@@ -141,8 +143,10 @@
           "example" : 12
         },
         "status" : {
-          "type" : "string",
-          "example" : "Erstellt"
+          "type" : "enum",
+          "items" : [ {
+            "enum" : [ "created", "er" ]
+          } ]
         },
         "numberOfRatings" : {
           "type" : "integer",
@@ -152,8 +156,11 @@
           "type" : "integer",
           "example" : 0
         },
-        "Comments" : {
-          "$ref" : "#/definitions/Comment"
+        "CommentsArray" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Comment"
+          }
         }
       }
     },
@@ -174,7 +181,5 @@
         }
       }
     }
-  },
-  "host" : "virtserver.swaggerhub.com",
-  "schemes" : [ "https" ]
+  }
 }
