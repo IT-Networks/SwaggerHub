@@ -1,11 +1,11 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "Eine API für die IdeaWall",
+    "title" : "IdeaWall API",
+    "description" : "Eine RESTful WebAPI für die IdeaWall",
     "version" : "1.0.0",
-    "title" : "Ideawall",
     "contact" : {
-      "email" : "you@your-company.com"
+      "name" : "Markus Giesbrecht & Halil Özdogan"
     },
     "license" : {
       "name" : "Apache 2.0",
@@ -32,18 +32,19 @@
     "/idea" : {
       "post" : {
         "tags" : [ "idea" ],
-        "summary" : "Anlegen eine Idee",
+        "summary" : "Anlegen einer Idee",
         "operationId" : "createIdea",
-        "description" : "Hier wird bei Aufruf eine Idee erstellt und dem der mitgegebenen User Id zugeteilt",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
+        "description" : "Hier wird bei Aufruf eine Idee erstellt und dem der mitgegebenen userID zugeteilt. Der Status wird auf 'created' gesetzt.",
+        "consumes" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json", "application/xml" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "idea",
+          "required" : true,
           "description" : "Idee die übergeben wird.",
           "schema" : {
             "type" : "object",
-            "required" : [ "titel", "description", "userID", "status" ],
+            "required" : [ "titel", "description", "userID" ],
             "properties" : {
               "titel" : {
                 "type" : "string",
@@ -57,10 +58,6 @@
                 "type" : "integer",
                 "format" : "int64",
                 "example" : 12
-              },
-              "status" : {
-                "type" : "string",
-                "enum" : [ "created" ]
               }
             }
           }
@@ -79,13 +76,113 @@
             "description" : "Der Server kann die Anfrage aufgrund eines internen Fehlers nicht ausführen."
           }
         }
+      },
+      "get" : {
+        "tags" : [ "idea" ],
+        "summary" : "Ausgabe einer Idee",
+        "operationId" : "getIdea",
+        "description" : "Per Übergabe einer ideaID werden alle Attribute dieser Idee zurückgegeben.",
+        "consumes" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "ideaID",
+          "required" : true,
+          "description" : "IdeaID, zu der alle Attribute der Idee ausgegeben werden.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "example" : 2
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Der Request wurde erfolgreich ausgeführt.",
+            "schema" : {
+              "$ref" : "#/definitions/Idea"
+            }
+          },
+          "400" : {
+            "description" : "Fehlerhaft Eingabeparameter."
+          },
+          "404" : {
+            "description" : "Unter der angegebenen ID konnte kein Idee gefunden werden."
+          },
+          "500" : {
+            "description" : "Der Server kann die Anfrage aufgrund eines internen Fehlers nicht ausführen."
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "idea" ],
+        "summary" : "Ändern einer Idee",
+        "operationId" : "setIdea",
+        "description" : "Per Übergabe eines Idee-Objekts (XML oder JSON) werden alle Attribute dieser Idee neu gesetzt.",
+        "consumes" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "idea",
+          "required" : true,
+          "description" : "Idee die übergeben wird.",
+          "schema" : {
+            "$ref" : "#/definitions/Idea"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Die Änderung wurde erfolgreich ausgeführt.",
+            "schema" : {
+              "$ref" : "#/definitions/Idea"
+            }
+          },
+          "400" : {
+            "description" : "Fehlerhaft Eingabeparameter."
+          },
+          "404" : {
+            "description" : "Unter der angegebenen ID konnte kein Idee gefunden werden."
+          },
+          "500" : {
+            "description" : "Der Server kann die Anfrage aufgrund eines internen Fehlers nicht ausführen."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "idea" ],
+        "summary" : "Löschen einer Idee",
+        "operationId" : "deleteIdea",
+        "description" : "Per Übergabe einer ideaID wird die zugehörige Idee gelöscht. Zudem werden alle Kommentare, Bewertungen und die zugehörige Historie der Idee gelöscht.",
+        "consumes" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "ideaID",
+          "required" : true,
+          "description" : "IdeaID, der Idee die gelöscht werden soll.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "example" : 3
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Die Löschung wurde erfolgreich ausgeführt."
+          },
+          "404" : {
+            "description" : "Unter der angegebenen ID konnte kein Idee gefunden werden."
+          },
+          "500" : {
+            "description" : "Der Server kann die Anfrage aufgrund eines internen Fehlers nicht ausführen."
+          }
+        }
       }
     },
     "/idea/{userID}" : {
       "get" : {
         "tags" : [ "idea" ],
         "summary" : "Lade alle Ideen eines Users",
-        "description" : "Mit übergeben der UserID werden alle Ideen eines Users in einem Array übergeben",
+        "description" : "Mit übergeben der UserID werden alle Ideen eines Users in einem Array übergeben.",
         "operationId" : "getIdeasByUserID",
         "produces" : [ "application/json", "application/xml" ],
         "parameters" : [ {
@@ -118,6 +215,49 @@
         }
       }
     },
+    "/idea/changeStatus" : {
+      "put" : {
+        "tags" : [ "idea" ],
+        "summary" : "Setzt den Status einer Idee.",
+        "description" : "Übergeben werden soll die ID der Idee und der zu setzende Status.<br>Mögliche Statusübergänge sind: <br><br> Created->Published,<br> Published->OnHold, <br>Published->UnderReview,<br> OnHold->Published, <br>UnderReview->BeeingImplemented,<br> BeeingImplemented->Done",
+        "operationId" : "setIdeaStatus",
+        "parameters" : [ {
+          "name" : "ideaID&status",
+          "in" : "body",
+          "description" : "Übergabe der ideaID zu dem der Status gesetzt werden soll.",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "ideaID", "status" ],
+            "properties" : {
+              "userID" : {
+                "type" : "integer",
+                "format" : "int64",
+                "example" : 12
+              },
+              "status" : {
+                "type" : "string",
+                "enum" : [ "created", "published", "onHold", "underReview", "BeeingImplemented", "Done" ]
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Der Status der Idee konnte gesetzt werden."
+          },
+          "400" : {
+            "description" : "Fehlerhaft Eingabeparameter. Für mögliche Statusübergänge siehe Beschreibung der Request."
+          },
+          "404" : {
+            "description" : "Unter der angegebenen ID konnte kein Idee gefunden werden."
+          },
+          "500" : {
+            "description" : "Der Server kann die Anfrage aufgrund eines internen Fehlers nicht ausführen."
+          }
+        }
+      }
+    },
     "/idea/{ideaID}/comment" : {
       "post" : {
         "tags" : [ "comment" ],
@@ -133,13 +273,6 @@
           "required" : true,
           "type" : "integer",
           "format" : "int64"
-        }, {
-          "name" : "status",
-          "description" : "Ein Kommentar kann nur im Status Published und UnderReview angelegt werden.",
-          "in" : "query",
-          "enum" : [ "Published", "UnderReview" ],
-          "required" : true,
-          "type" : "string"
         }, {
           "name" : "comment",
           "in" : "body",
@@ -199,13 +332,6 @@
           "type" : "integer",
           "format" : "int64"
         }, {
-          "name" : "status",
-          "description" : "Ein Rating kann nur im Status Published und UnderReview angelegt werden.",
-          "in" : "query",
-          "enum" : [ "Published", "UnderReview" ],
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "rating",
           "in" : "body",
           "description" : "Rating, das übergeben wird",
@@ -256,13 +382,14 @@
         "tags" : [ "user" ],
         "summary" : "Anlegen eines Users",
         "operationId" : "createUser",
-        "description" : "Anlage eins Users für die IdeaWall",
+        "description" : "Anlage eins Users für die IdeaWall.",
         "consumes" : [ "application/json", "application/xml" ],
         "produces" : [ "application/json", "application/xml" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "user",
-          "description" : "Userdaten die übergeben werden",
+          "required" : true,
+          "description" : "Userdaten die übergeben werden.",
           "schema" : {
             "type" : "object",
             "required" : [ "name", "password" ],
@@ -289,7 +416,7 @@
             }
           },
           "400" : {
-            "description" : "Fehlerhaft Eingabeparameter."
+            "description" : "Fehlerhafte Eingabeparameter."
           },
           "500" : {
             "description" : "Der Server kann die Anfrage aufgrund eines internen Fehlers nicht ausführen."
@@ -303,7 +430,7 @@
       "type" : "object",
       "required" : [ "ideaID", "titel", "description", "userID", "status" ],
       "properties" : {
-        "id" : {
+        "ideaID" : {
           "type" : "integer",
           "format" : "int64",
           "example" : 408
