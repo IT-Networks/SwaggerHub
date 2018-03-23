@@ -413,20 +413,20 @@
       }
     },
     "User" : {
-      "required" : [ "userID", "password", "name" ],
+      "required" : [ "userID", "name", "password" ],
       "properties" : {
         "userID" : {
           "type" : "integer",
           "format" : "int64",
           "example" : 2
         },
-        "password" : {
-          "type" : "string",
-          "example" : "a141ae2a840c11f7d6a8f550bb6811f5"
-        },
         "name" : {
           "type" : "string",
           "example" : "Test User"
+        },
+        "password" : {
+          "type" : "string",
+          "example" : "a141ae2a840c11f7d6a8f550bb6811f5"
         }
       }
     }
