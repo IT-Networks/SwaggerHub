@@ -81,7 +81,7 @@
         "tags" : [ "idea" ],
         "summary" : "Ändern einer Idee",
         "operationId" : "setIdea",
-        "description" : "Per Übergabe eines Idee-Objekts (XML oder JSON) werden alle Attribute dieser Idee neu gesetzt.",
+        "description" : "Per Übergabe eines Idee-Objekts (JSON) werden alle Attribute dieser Idee neu gesetzt.",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -236,7 +236,7 @@
               },
               "status" : {
                 "type" : "string",
-                "enum" : [ "created", "published", "onHold", "underReview", "BeeingImplemented", "Done" ]
+                "enum" : [ "created", "published", "onHold", "underReview", "beeingImplemented", "done" ]
               }
             }
           }
@@ -379,9 +379,9 @@
     "/user" : {
       "post" : {
         "tags" : [ "user" ],
-        "summary" : "Anlegen eines Users",
+        "summary" : "Anlage eines Users",
         "operationId" : "createUser",
-        "description" : "Anlage eins Users für die IdeaWall.",
+        "description" : "Anlage eines Users für die IdeaWall. Dieser kann Ideen erstellen, Kommentare und Bewertungen zu Ideen abgegeben.",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -449,7 +449,7 @@
         },
         "status" : {
           "type" : "string",
-          "enum" : [ "created", "published", "onHold", "underReview", "BeeingImplemented", "Done" ]
+          "enum" : [ "created", "published", "onHold", "underReview", "beeingImplemented", "done" ]
         },
         "numberOfRatings" : {
           "type" : "integer",
